@@ -1,4 +1,4 @@
-package com.louis.study;
+package com.louis.study.awt;
 
 import javax.swing.*;
 import java.awt.*;
