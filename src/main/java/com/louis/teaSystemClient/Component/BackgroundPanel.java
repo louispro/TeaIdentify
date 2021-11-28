@@ -4,11 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * ÀµĞ¡ D
+ * èµ–å°ç‡š
  * www.louis.com
  */
 public class BackgroundPanel extends JPanel {
-    //ÉùÃ÷Í¼Æ¬
+    //èƒŒæ™¯å›¾ç‰‡
     private Image backIcon;
 
     public BackgroundPanel(Image backIcon){

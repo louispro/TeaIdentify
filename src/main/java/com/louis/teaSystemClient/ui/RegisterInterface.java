@@ -1,7 +1,7 @@
-package com.louis.teaSystemClient.Component;
+package com.louis.teaSystemClient.ui;
 
+import com.louis.teaSystemClient.Component.BackgroundPanel;
 import com.louis.teaSystemClient.pojo.ResultInfo;
-import com.louis.teaSystemClient.ui.MainInterface;
 import com.louis.teaSystemClient.util.JsonUtils;
 import com.louis.teaSystemClient.util.PostUtils;
 import com.louis.teaSystemClient.util.ScreenUtils;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @赖小燚
  * @www.louis_lai.com
  */
-public class RegisterPanel {
+public class RegisterInterface {
 
     JFrame jf = new JFrame("注册");
 
@@ -30,7 +30,7 @@ public class RegisterPanel {
 
 
     public void init() throws IOException {
-        BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/loginBg.png")));
+        BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/loginBg.png")));
 
         //font字体
         Font font = new Font("楷体",Font.BOLD,16);
@@ -119,7 +119,7 @@ public class RegisterPanel {
 
         backGroupPanel.add(registerBox);
         jf.add(backGroupPanel);
-        jf.setIconImage(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/teaIcon.jpg")));
+        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/tea.png")));
         jf.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
         jf.setResizable(false);
         jf.setVisible(true);
@@ -147,7 +147,7 @@ public class RegisterPanel {
                         //请求成功
                         JOptionPane.showMessageDialog(jf,info.getMessage());
                         try {
-                            new MainInterface().init();
+                            new LoginInterface().init();
                             jf.dispose();
                         }catch (Exception ex){
                             ex.printStackTrace();
@@ -161,11 +161,24 @@ public class RegisterPanel {
                 });
             }
         });
+
+        //跳转到登录界面
+        loginBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new LoginInterface().init();
+                    jf.dispose();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
         try {
-            new RegisterPanel().init();
+            new RegisterInterface().init();
         } catch (IOException e) {
             e.printStackTrace();
         }

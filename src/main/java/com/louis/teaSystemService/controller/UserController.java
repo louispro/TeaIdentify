@@ -27,13 +27,15 @@ public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
-    public ResultInfo login(@RequestParam("username")String username, @RequestParam("password")String password, HttpSession session){
-        User user = userService.getUserByUsername(username);
+    public ResultInfo login(User user, HttpSession session) throws UnsupportedEncodingException {
+        User user1 = userService.getUserByUsername(user.getUsername());
 
-        if(user == null){
+        if(user1 == null){
             return new ResultInfo(false,null,"用户名不存在");
         }else{
-            if(user.getPassword().equals(password) == false){
+            //获取加密之后的密码
+            String password = UserUtils.md5(user.getPassword(),user1.getId());
+            if(user1.getPassword().equals(password) == false){
                 return new ResultInfo(false,null,"密码错误");
             }
         }
@@ -50,6 +52,7 @@ public class UserController {
             //用户名已存在
             return new ResultInfo(false,null,"用户名已存在");
         }
+        //设置id和密码加密
         user = UserUtils.dealUser(user);
         userService.insertUser(user);
         return new ResultInfo(true,null,"注册成功");

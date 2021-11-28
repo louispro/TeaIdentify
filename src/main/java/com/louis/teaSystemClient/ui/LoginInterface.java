@@ -9,7 +9,6 @@ import com.louis.teaSystemClient.pojo.ResultInfo;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.xml.transform.Result;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,13 +17,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.awt.SystemColor.info;
-
 /**
  * @author 赖小燚
  * @www.louis_lai.com
  */
-public class MainInterface {
+public class LoginInterface {
 
     JFrame jf = new JFrame("茶叶嫩芽识别系统");
     final int WIDTH = 500;
@@ -33,10 +30,10 @@ public class MainInterface {
     //初始化登陆界面
     public void init() throws IOException {
         //设置组件图标
-        jf.setIconImage(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/teaIcon.jpg")));
+        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/tea.png")));
         jf.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
 
-        BackgroundPanel bgPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/loginBg.png")));
+        BackgroundPanel bgPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/loginBg.png")));
 
         //font字体
         Font font = new Font("楷体",Font.BOLD,16);
@@ -101,14 +98,30 @@ public class MainInterface {
                     //请求成功
                     if(info.isFlag()){
                         try{
-                            JOptionPane.showMessageDialog(jf,info.getMessage());
+                            //登陆成功，跳转至系统
+                            new TeaSystemInterface().init();
+                            jf.dispose();
                         }catch (Exception ex){
                             ex.printStackTrace();
                         }
                     }else {
+                        //登录失败
                         JOptionPane.showMessageDialog(jf,info.getMessage());
                     }
                 },/**请求失败**/()-> JOptionPane.showMessageDialog(jf,"网络异常，请稍后重试"));
+            }
+        });
+
+        //注册事件
+        registerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    new RegisterInterface().init();
+                    jf.dispose();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
             }
         });
     }
@@ -116,7 +129,7 @@ public class MainInterface {
     //主窗口
     public static void main(String[] args) {
         try {
-            new MainInterface().init();
+            new LoginInterface().init();
         } catch (IOException e) {
             e.printStackTrace();
         }
