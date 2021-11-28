@@ -1,82 +1,109 @@
 package com.louis.teaSystemClient.Component;
 
+import com.louis.teaSystemClient.pojo.ResultInfo;
+import com.louis.teaSystemClient.ui.MainInterface;
+import com.louis.teaSystemClient.util.JsonUtils;
+import com.louis.teaSystemClient.util.PostUtils;
 import com.louis.teaSystemClient.util.ScreenUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * @ÀµĞ¡ D
+ * @èµ–å°ç‡š
  * @www.louis_lai.com
  */
 public class RegisterPanel {
 
-    JFrame jf = new JFrame("×¢²á");
+    JFrame jf = new JFrame("æ³¨å†Œ");
 
     final int WIDTH = 500;
-    final int HEIGHT = 400;
+    final int HEIGHT = 500;
 
 
 
     public void init() throws IOException {
         BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/loginBg.png")));
 
-        //font×ÖÌå
-        Font font = new Font("¿¬Ìå",Font.BOLD,16);
+        //fontå­—ä½“
+        Font font = new Font("æ¥·ä½“",Font.BOLD,16);
 
-        //µÇÂ¼box
+        //æ³¨å†Œbox
         Box registerBox = Box.createVerticalBox();
 
-        //ÓÃ»§box
+        //ç”¨æˆ·box
         Box userBox = Box.createHorizontalBox();
-        JLabel userLabel = new JLabel("ÓÃ »§ Ãû£º");
+        JLabel userLabel = new JLabel("ç”¨ æˆ· å");
         userLabel.setFont(font);
         JTextField userField = new JTextField(15);
         userBox.add(userLabel);
         userBox.add(Box.createHorizontalStrut(10));
         userBox.add(userField);
 
-        //ÃÜÂëbox
+        //å¯†ç box
         Box pwBox = Box.createHorizontalBox();
-        JLabel pwLabel = new JLabel("ÃÜ    Âë£º");
+        JLabel pwLabel = new JLabel("å¯†    ç ");
         pwLabel.setFont(font);
         JTextField pwField = new JTextField(15);
         pwBox.add(pwLabel);
         pwBox.add(Box.createHorizontalStrut(10));
         pwBox.add(pwField);
 
-        //È·ÈÏÃÜÂëbox
+        //ç¡®è®¤å¯†ç box
         Box rePwBox = Box.createHorizontalBox();
-        JLabel rePwLabel = new JLabel("È·ÈÏÃÜÂë£º");
+        JLabel rePwLabel = new JLabel("ç¡®è®¤å¯†ç ");
         rePwLabel.setFont(font);
         JTextField rePwField = new JTextField(15);
         rePwBox.add(rePwLabel);
         rePwBox.add(Box.createHorizontalStrut(10));
         rePwBox.add(rePwField);
 
-        //ÊÖ»úºÅbox
+        //æ‰‹æœºå·box
         Box phoneBox = Box.createHorizontalBox();
-        JLabel phoneLabel = new JLabel("ÊÖ »ú ºÅ£º");
+        JLabel phoneLabel = new JLabel("æ‰‹ æœº å·");
         phoneLabel.setFont(font);
         JTextField phoneField = new JTextField(15);
         phoneBox.add(phoneLabel);
         phoneBox.add(Box.createHorizontalStrut(10));
         phoneBox.add(phoneField);
 
-        //°´Å¥box
+        //æ€§åˆ«box
+        Box sexBox = Box.createHorizontalBox();
+        JLabel sexLabel = new JLabel("æ€§    åˆ«");
+        sexLabel.setFont(font);
+        JRadioButton boyBtn = new JRadioButton("ç”·");
+        JRadioButton girlBtn = new JRadioButton("å¥³");
+        boyBtn.setFont(font);
+        girlBtn.setFont(font);
+        ButtonGroup sexBtnGroup = new ButtonGroup();
+        sexBtnGroup.add(boyBtn);
+        sexBtnGroup.add(girlBtn);
+        sexBox.add(sexLabel);
+        sexBox.add(Box.createHorizontalStrut(10));
+        sexBox.add(boyBtn);
+        sexBox.add(Box.createHorizontalStrut(60));
+        sexBox.add(girlBtn);
+        sexBox.add(Box.createHorizontalStrut(120));
+
+
+        //ç™»å½•box
         Box btnBox = Box.createHorizontalBox();
-        JButton registerBtn= new JButton("×¢²á");
-        JButton loginBtn  = new JButton("µÇÂ¼");
+        JButton registerBtn= new JButton("æ³¨å†Œ");
+        JButton loginBtn  = new JButton("ç™»å½•");
         loginBtn.setFont(font);
         registerBtn.setFont(font);
         btnBox.add(registerBtn);
         btnBox.add(Box.createHorizontalStrut(100));
         btnBox.add(loginBtn);
 
-        //×é×°×¢²áÏà¹ØÄÚÈİ
+        //ç»„è£…æ³¨å†Œç•Œé¢
         registerBox.add(Box.createVerticalStrut(60));
         registerBox.add(userBox);
         registerBox.add(Box.createVerticalStrut(30));
@@ -85,6 +112,8 @@ public class RegisterPanel {
         registerBox.add(rePwBox);
         registerBox.add(Box.createVerticalStrut(30));
         registerBox.add(phoneBox);
+        registerBox.add(Box.createVerticalStrut(30));
+        registerBox.add(sexBox);
         registerBox.add(Box.createVerticalStrut(30));
         registerBox.add(btnBox);
 
@@ -95,6 +124,43 @@ public class RegisterPanel {
         jf.setResizable(false);
         jf.setVisible(true);
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //æ³¨å†Œ
+        registerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //è·å–ç”¨æˆ·ä¿¡æ¯
+                String username = userField.getText();
+                String password = pwField.getText();
+                String phone = phoneField.getText();
+                String sex = boyBtn.isSelected()?boyBtn.getText():girlBtn.getText();
+                //å‚æ•°
+                Map<String,String> params = new HashMap<>();
+                params.put("username",username);
+                params.put("password",password);
+                params.put("phone",phone);
+                params.put("sex",sex);
+                //å‘é€postè¯·æ±‚
+                PostUtils.postWithParams("http://localhost:8080/user/register",params,(result)->{
+                    ResultInfo info = JsonUtils.parseResult(result);
+                    if(info.isFlag()){
+                        //è¯·æ±‚æˆåŠŸ
+                        JOptionPane.showMessageDialog(jf,info.getMessage());
+                        try {
+                            new MainInterface().init();
+                            jf.dispose();
+                        }catch (Exception ex){
+                            ex.printStackTrace();
+                        }
+                    }else{
+                        //è¯·æ±‚å¤±è´¥
+                        JOptionPane.showMessageDialog(jf,info.getMessage());
+                    }
+                },()->{
+                    JOptionPane.showMessageDialog(jf,"ç½‘ç»œå¼‚å¸¸ï¼Œè¯·ç¨åé‡è¯•");
+                });
+            }
+        });
     }
 
     public static void main(String[] args) {

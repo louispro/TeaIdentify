@@ -32,7 +32,7 @@
     <!--整合mybatis-->
     <bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="configLocation" value="classpath:mybatis/mybatis-config.xml"></property>
-        <property name="mapperLocations" value="classpath:com/louis/teaSystem/mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath:com/louis/teaSystemService/mapper/*.xml"></property>
         <property name="dataSource" ref="c3p0"></property>
     </bean>
 

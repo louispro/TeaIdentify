@@ -21,48 +21,48 @@ import java.util.Map;
 import static java.awt.SystemColor.info;
 
 /**
- * @ÀµĞ¡ D
+ * @author èµ–å°ç‡š
  * @www.louis_lai.com
  */
 public class MainInterface {
 
-    JFrame jf = new JFrame("²èÒ¶ÄÛÑ¿Ê¶±ğÏµÍ³");
+    JFrame jf = new JFrame("èŒ¶å¶å«©èŠ½è¯†åˆ«ç³»ç»Ÿ");
     final int WIDTH = 500;
     final int HEIGHT = 300;
 
-    //×é×°ÊÓÍ¼
+    //åˆå§‹åŒ–ç™»é™†ç•Œé¢
     public void init() throws IOException {
-        //ÉèÖÃ´°¿ÚÏà¹ØÊôĞÔ
+        //è®¾ç½®ç»„ä»¶å›¾æ ‡
         jf.setIconImage(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/teaIcon.jpg")));
         jf.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
-        //ÉèÖÃ´°¿ÚÄÚÈİ
+
         BackgroundPanel bgPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/images/teaIdentify/tea/loginBg.png")));
 
-        //font×ÖÌå
-        Font font = new Font("¿¬Ìå",Font.BOLD,16);
+        //fontå­—ä½“
+        Font font = new Font("æ¥·ä½“",Font.BOLD,16);
 
-        //×é×°ÓÃ»§Ãû
+        //ç”¨æˆ·box
         Box userBox = Box.createHorizontalBox();
-        JLabel userLabel = new JLabel("ÓÃ»§Ãû£º");
+        JLabel userLabel = new JLabel("ç”¨æˆ·ï¼š");
         userLabel.setFont(font);
         JTextField userField = new JTextField(15);
         userBox.add(userLabel);
         userBox.add(Box.createHorizontalStrut(10));
         userBox.add(userField);
 
-        //×é×°ÃÜÂë
+        //å¯†ç box
         Box pwBox = Box.createHorizontalBox();
-        JLabel pwLabel = new JLabel("ÃÜ  Âë£º");
+        JLabel pwLabel = new JLabel("å¯†ç ï¼š");
         pwLabel.setFont(font);
         JTextField pwField = new JTextField(15);
         pwBox.add(pwLabel);
         pwBox.add(Box.createHorizontalStrut(10));
         pwBox.add(pwField);
 
-        //×é×°°´Å¥
+        //æŒ‰é’®box
         Box btnBox = Box.createHorizontalBox();
-        JButton loginBtn = new JButton("µÇÂ¼");
-        JButton registerBtn = new JButton("×¢²á");
+        JButton loginBtn = new JButton("ç™»å½•");
+        JButton registerBtn = new JButton("æ³¨å†Œ");
         loginBtn.setFont(font);
         registerBtn.setFont(font);
         btnBox.add(loginBtn);
@@ -70,7 +70,7 @@ public class MainInterface {
         btnBox.add(registerBtn);
 
 
-        //×é×°µÇÂ¼Ïà¹ØµÄÄÚÈİ
+        //ç»„è£…ç™»é™†ç•Œé¢
         Box loginBox = Box.createVerticalBox();
         loginBox.add(Box.createVerticalStrut(60));
         loginBox.add(userBox);
@@ -88,19 +88,18 @@ public class MainInterface {
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //»ñÈ¡ÓÃ»§ÃûºÍÃÜÂë
+                //è·å–ç”¨æˆ·åå’Œå¯†ç 
                 String username = userField.getText();
                 String password = pwField.getText();
                 Map<String,String> params = new HashMap<>();
                 params.put("username",username);
                 params.put("password",password);
-                //·ÃÎÊµÇÂ¼½Ó¿Ú
+                //å‘é€è¯·æ±‚
                 PostUtils.postWithParams("http://localhost:8080/user/login",params,result -> {
                     ResultInfo info = JsonUtils.parseResult(result);
                     System.out.println("info:"+info);
-                    //ÅĞ¶ÏinfoÖĞµÄflag±ê¼Ç
+                    //è¯·æ±‚æˆåŠŸ
                     if(info.isFlag()){
-                        //µÇÂ½³É¹¦£¬Ìø×ªµ½Ö÷Ò³Ãæ
                         try{
                             JOptionPane.showMessageDialog(jf,info.getMessage());
                         }catch (Exception ex){
@@ -109,12 +108,12 @@ public class MainInterface {
                     }else {
                         JOptionPane.showMessageDialog(jf,info.getMessage());
                     }
-                },/**ÇëÇóÊ§°Ü**/()-> JOptionPane.showMessageDialog(jf,"ÍøÂçÒì³££¬ÇëÉÔºóÖØÊÔ"));
+                },/**è¯·æ±‚å¤±è´¥**/()-> JOptionPane.showMessageDialog(jf,"ç½‘ç»œå¼‚å¸¸ï¼Œè¯·ç¨åé‡è¯•"));
             }
         });
     }
 
-    //¿Í»§¶Ë³ÌĞòµÄÈë¿Ú
+    //ä¸»çª—å£
     public static void main(String[] args) {
         try {
             new MainInterface().init();

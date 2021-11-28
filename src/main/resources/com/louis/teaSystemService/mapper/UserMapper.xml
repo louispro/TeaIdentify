@@ -7,7 +7,9 @@
         select * from t_user where username = #{username}
     </select>
 
-    <insert id="insertUser">
-
+    <insert id="insertUser" parameterType="user">
+        insert into t_user(id,username,`password`,sex,phone)
+        values
+        (#{id},#{username},#{password},#{sex},#{phone})
     </insert>
 </mapper>
