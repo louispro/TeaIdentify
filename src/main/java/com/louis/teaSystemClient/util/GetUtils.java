@@ -15,32 +15,32 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * ÀµĞ¡ D
+ * èµ–å°ç‡š
  * www.louis.com
  */
 public class GetUtils {
 
-    //ÎŞ²Î·½Ê½
+    //æ— å‚getè¯·æ±‚
     public static void get(String url, SuccessListener sListener, FailListener fListener) {
         getWithParams(url, new HashMap<>(),sListener,fListener);
     }
 
-    //ÓĞ²Î·½Ê½
+    //æœ‰å‚getè¯·æ±‚
     public static void getWithParams(String url, Map<String, Object> params, SuccessListener sListener, FailListener fListener) {
         CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultCookieStore(CookiesHolder.getCookieStore()).build();
         CloseableHttpResponse response = null;
         try {
-            // ´´½¨GetÇëÇó
+            //åˆ›å»ºgetè¯·æ±‚
             url = joinParam(url, params);
             HttpGet httpGet = new HttpGet(url);
             RequestConfig requestConfig = RequestConfig.custom()
-                    .setSocketTimeout(3000) //·şÎñÆ÷ÏìÓ¦³¬Ê±Ê±¼ä
-                    .setConnectTimeout(3000) //Á¬½Ó·şÎñÆ÷³¬Ê±Ê±¼ä
+                    .setSocketTimeout(3000) //æœåŠ¡å™¨å“åº”è¶…æ—¶æ—¶é—´
+                    .setConnectTimeout(3000) //è¿æ¥æœåŠ¡å™¨è¶…æ—¶æ—¶é—´
                     .build();
             httpGet.setConfig(requestConfig);
-            // ÓÉ¿Í»§¶ËÖ´ĞĞ(·¢ËÍ)GetÇëÇó
+            //ç”±å®¢æˆ·ç«¯å‘é€getè¯·æ±‚
             response = httpClient.execute(httpGet);
-            // ´ÓÏìÓ¦Ä£ĞÍÖĞ»ñÈ¡ÏìÓ¦ÊµÌå
+            //ä»ç›¸åº”æ¨¡å‹ä¸­è·å–å“åº”å®ä½“
             HttpEntity responseEntity = response.getEntity();
             if (responseEntity != null) {
                 sListener.success(EntityUtils.toString(responseEntity));
@@ -51,7 +51,7 @@ public class GetUtils {
             fListener.fail();
         } finally {
             try {
-                // ÊÍ·Å×ÊÔ´
+                //é‡Šæ”¾èµ„æº
                 if (httpClient != null) {
                     httpClient.close();
                 }

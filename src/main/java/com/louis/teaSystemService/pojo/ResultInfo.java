@@ -3,11 +3,11 @@ package com.louis.teaSystemService.pojo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
- * ¿µ–°†D
+ * ËµñÂ∞èÁáö
  * www.louis.com
  */
 @JsonIgnoreProperties(value = {"handler"})
-public class ResultInfo {
+public class  ResultInfo {
 
     private boolean flag;
     private Object data;

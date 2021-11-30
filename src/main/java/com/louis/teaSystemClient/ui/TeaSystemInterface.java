@@ -10,6 +10,8 @@ import javax.swing.event.TreeSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowStateListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -19,12 +21,19 @@ import java.io.IOException;
  */
 public class TeaSystemInterface {
 
-    JFrame jFrame = new JFrame("茶叶嫩芽识别系统");
+    //窗口宽高
+    Rectangle rectangle;
+
+    JFrame jFrame = new JFrame("茶叶嫩芽识别系统",GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration());
 
     //图像标注界面
+    JPanel labelImage = new JPanel();
     //图像处理界面
+    JPanel processImage = new JPanel();
     //模型训练界面
+    JPanel trainModel = new JPanel();
     //嫩芽识别界面
+    JPanel teaBudIdentifyPanel = new JPanel();
 
 
     public void init(){
@@ -67,10 +76,14 @@ public class TeaSystemInterface {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        jFrame.setSize(ScreenUtils.getScreenWidth(),ScreenUtils.getScreenHeight());
+        jFrame.setBounds(new Rectangle(0,0,ScreenUtils.getScreenWidth(),ScreenUtils.getScreenHeight()-ScreenUtils.getInset()));
+        jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        jFrame.setM
+        rectangle = jFrame.getBounds();
+        System.out.println(jFrame.getSize());
+        System.out.println(rectangle+"   8");
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setResizable(false);
 
         //菜单栏事件
         changeUser.addActionListener(new ActionListener() {
@@ -110,15 +123,29 @@ public class TeaSystemInterface {
                     splitPane.setDividerLocation(splitPane.getDividerLocation());
                 }
                 if(systemTree.getTeaBudIdentify().equals(leaf)){
-                    splitPane.setRightComponent(new JLabel("嫩芽识别"));
+                    splitPane.setRightComponent(teaBudIdentifyPanel);
                     splitPane.setDividerLocation(splitPane.getDividerLocation());
+                }
+            }
+        });
+
+        //点击任务栏事件
+        jFrame.addWindowStateListener(new WindowStateListener() {
+            @Override
+            public void windowStateChanged(WindowEvent e) {
+                if(e.getNewState() == 1 || e.getNewState() == 7) {  //窗口最小化
+                    System.out.println("窗口最小化");
+                }else if(e.getNewState() == 0) {    //窗口恢复到初始状态
+                    System.out.println("窗口恢复到初始状态");
+                }else if(e.getNewState() == 6) {
+                    System.out.println("窗口最大化");
                 }
             }
         });
     }
 
-    //加载相应界面
-    public JPanel loadPanel(){
+    //加载嫩芽识别界面
+    public JPanel loadTeaBudIdentifyPanel(){
         return null;
     }
 

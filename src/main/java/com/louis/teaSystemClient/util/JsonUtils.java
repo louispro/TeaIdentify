@@ -8,7 +8,7 @@ import com.louis.teaSystemClient.pojo.ResultInfo;
 import java.io.IOException;
 
 /**
- * ¿µ–°†D
+ * ËµñÂ∞èÁáö
  * www.louis.com
  */
 public class JsonUtils {
@@ -19,8 +19,6 @@ public class JsonUtils {
         ResultInfo resultInfo = null;
         try {
             resultInfo = om.readValue(json, ResultInfo.class);
-            System.out.println("JsonUtils:"+resultInfo);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -30,7 +28,7 @@ public class JsonUtils {
     public static void main(String[] args) {
         JsonFactory jsonFactory = new JsonFactory();
         try {
-            JsonParser jsonParser = jsonFactory.createParser("{\"flag\":true,\"data\":1,\"message\":\"µ«¬º≥…π¶\"}");
+            JsonParser jsonParser = jsonFactory.createParser("{\"flag\":true,\"data\":1,\"message\":\"ÔøΩÔøΩ¬ºÔøΩ…πÔøΩ\"}");
             ResultInfo resultInfo = (ResultInfo)jsonParser.currentValue();
         } catch (IOException e) {
             e.printStackTrace();
