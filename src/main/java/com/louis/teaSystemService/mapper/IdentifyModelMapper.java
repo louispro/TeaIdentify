@@ -1,6 +1,6 @@
 package com.louis.teaSystemService.mapper;
 
-import com.louis.teaSystemService.pojo.Model;
+import com.louis.teaSystemService.pojo.IdentifyModel;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,6 +10,6 @@ import java.util.List;
  * www.louis.com
  */
 @Repository
-public interface ModelMapper {
-    List<Model> getModelAll();
+public interface IdentifyModelMapper {
+    List<IdentifyModel> getModelAll();
 }

@@ -1,10 +1,10 @@
-package com.louis.teaSystemService.pojo;
+package com.louis.teaSystemClient.pojo;
 
 /**
  * 赖小燚
  * www.louis.com
  */
-public class Model {
+public class IdentifyModel {
     private Integer id;
     private String modelName;
 

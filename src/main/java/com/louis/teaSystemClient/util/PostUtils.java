@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.*;
 
 /**
- * ÀµĞ¡ D
+ * èµ–å°ç‡š
  * www.louis.com
  */
 public class PostUtils {
@@ -33,8 +33,8 @@ public class PostUtils {
 
             HttpPost httpPost = new HttpPost(url);
             RequestConfig requestConfig = RequestConfig.custom()
-                    .setSocketTimeout(3000) //·şÎñÆ÷ÏìÓ¦³¬Ê±Ê±¼ä
-                    .setConnectTimeout(3000) //Á¬½Ó·şÎñÆ÷³¬Ê±Ê±¼ä
+                    .setSocketTimeout(3000) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Ê±Ê±ï¿½ï¿½
+                    .setConnectTimeout(3000) //ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±Ê±ï¿½ï¿½
                     .build();
 
             httpPost.setConfig(requestConfig);
@@ -42,11 +42,11 @@ public class PostUtils {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, "utf-8");
             httpPost.setEntity(entity);
             httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-            // ÓÉ¿Í»§¶ËÖ´ĞĞ(·¢ËÍ)ÇëÇó
+            // ï¿½É¿Í»ï¿½ï¿½ï¿½Ö´ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½
             response = httpClient.execute(httpPost);
 
 
-            // ´ÓÏìÓ¦Ä£ĞÍÖĞ»ñÈ¡ÏìÓ¦ÊµÌå
+            // ï¿½ï¿½ï¿½ï¿½Ó¦Ä£ï¿½ï¿½ï¿½Ğ»ï¿½È¡ï¿½ï¿½Ó¦Êµï¿½ï¿½
             HttpEntity responseEntity = response.getEntity();
 
             if (responseEntity != null) {
@@ -57,7 +57,7 @@ public class PostUtils {
             fListener.fail();
         } finally {
             try {
-                // ÊÍ·Å×ÊÔ´
+                // ï¿½Í·ï¿½ï¿½ï¿½Ô´
                 if (httpClient != null) {
                     httpClient.close();
                 }
