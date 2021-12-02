@@ -30,10 +30,10 @@ public class LoginInterface {
     //初始化登陆界面
     public void init() throws IOException {
         //设置组件图标
-        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/tea.png")));
+        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/tea.png")));
         jf.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
 
-        BackgroundPanel bgPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/loginBg.png")));
+        BackgroundPanel bgPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/loginBg.png")));
 
         //font字体
         Font font = new Font("楷体",Font.BOLD,16);

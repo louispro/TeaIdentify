@@ -6,12 +6,12 @@ import com.louis.teaSystemClient.pojo.ResultInfo;
 import com.louis.teaSystemClient.util.GetUtils;
 import com.louis.teaSystemClient.util.JsonUtils;
 import com.louis.teaSystemClient.util.ResultInfoData2Vector;
+import com.louis.teaSystemClient.util.UploadUtil;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Vector;
 
 /**
@@ -26,14 +26,15 @@ public class TeaBudIdentifyPanel extends JPanel{
     JButton identifyBtn = new JButton();
     JPanel originImagePanel = new JPanel();
     JPanel identifyImagePanel = new JPanel();
-
+    //识别之后的图片真实路径
+    private static final String REAL_PATH = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\identifyTeaBud";
     public TeaBudIdentifyPanel() {
         //整个panel设置borderlayout布局
         this.setLayout(new BorderLayout());
         this.loadModel();   //加载模型
 
         JPanel modelPanel = new JPanel();
-        ImageIcon btnIcon = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/run.png");
+        ImageIcon btnIcon = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/run.png");
         identifyBtn.setBackground(new Color(203,220,217));
         identifyBtn.setBorder(BorderFactory.createLineBorder(new Color(203,220,217),0));
         identifyBtn.setIcon(btnIcon);
@@ -48,7 +49,7 @@ public class TeaBudIdentifyPanel extends JPanel{
         //imagePanel采用GridLayout布局
         imagePanel.setLayout(new GridLayout(1,2,1,0));
         originImagePanel.setLayout(new BorderLayout());
-        this.setImage(originImagePanel);
+        this.setImage(originImagePanel,"D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\originTeaBud\\girl.jpg");
 
         originImagePanel.setBorder(BorderFactory.createLineBorder(Color.gray,1));
         identifyImagePanel.setBorder(BorderFactory.createLineBorder(Color.gray,1));
@@ -57,6 +58,20 @@ public class TeaBudIdentifyPanel extends JPanel{
         imagePanel.add(originImagePanel);
         imagePanel.add(identifyImagePanel);
         this.add(imagePanel);
+
+        identifyBtn.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                String realpath =  UploadUtil.uploadImage("http://localhost:8080/model/originTeaBud", new FailListener() {
+                    @Override
+                    public void fail() {
+                        JOptionPane.showMessageDialog(imagePanel,"请求失败");
+                    }
+                });
+                setImage(identifyImagePanel,realpath);
+                identifyImagePanel.repaint();
+            }
+        });
 
     }
 
@@ -80,12 +95,12 @@ public class TeaBudIdentifyPanel extends JPanel{
     }
 
     //添加茶叶图片
-    public void setImage(JPanel jPanel){
+    public void setImage(JPanel jPanel,String realPath){
 //        Icon icon = new ImageIcon("src/main/resources/static/images/teaIdentify/water.jpg");
         JLabel jLabel = new JLabel();
         jLabel.setLayout(new BorderLayout());
         jLabel.setBorder(BorderFactory.createLineBorder(Color.green,2));
-        ImageIcon image = new ImageIcon("src/main/resources/static/images/teaIdentify/girl.jpg");
+        ImageIcon image = new ImageIcon(realPath);
         Image scaleImage = image.getImage().getScaledInstance((int)(image.getIconWidth()*0.7),(int)(image.getIconHeight()*0.7),Image.SCALE_DEFAULT);
         image.setImage(scaleImage);
         jLabel.setIcon(image);

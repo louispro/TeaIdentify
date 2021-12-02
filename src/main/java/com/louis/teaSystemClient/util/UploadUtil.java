@@ -1,5 +1,7 @@
 package com.louis.teaSystemClient.util;
 
+import com.louis.teaSystemClient.listener.FailListener;
+import com.louis.teaSystemClient.listener.SuccessListener;
 import org.apache.http.Consts;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -24,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 public class UploadUtil {
 
     //上传图片
-    public static void uploadImage(String url){
+    public static String uploadImage(String url, FailListener failListener){
         //可关闭的httpclient客户端，相当于打开的一个浏览器
         CloseableHttpClient client = HttpClients.createDefault();
         //构造httpPost请求对象
@@ -37,11 +40,12 @@ public class UploadUtil {
         builder.setCharset(Consts.UTF_8);       //设置编码
         builder.setContentType(ContentType.MULTIPART_FORM_DATA);    //设置为表单form enctype为application/m
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);  //设置浏览器模式
-        HttpEntity httpEntity = builder.addBinaryBody("fileName",new File("src/main/resources/static/images/teaIdentify/girl.jpg"))
+        HttpEntity httpEntity = builder.addBinaryBody("fileName",new File("src/main/resources/static/images/teaIdentify/client/originTeaBud/girl.jpg"))
                 .build();
         httpPost.setEntity(httpEntity);
         //响应
         CloseableHttpResponse response = null;
+        FileOutputStream fos = null;
         try {
             response = client.execute(httpPost);
             int status = response.getStatusLine().getStatusCode();
@@ -50,14 +54,22 @@ public class UploadUtil {
                 //获取响应结果
                 HttpEntity entity = response.getEntity();
                 //对HttpEntity操作的工具类
-                String result = EntityUtils.toString(entity, StandardCharsets.UTF_8);   //获取响应体的字符串形式
+//                String result = EntityUtils.toString(entity, StandardCharsets.UTF_8);   //获取响应体的字符串形式
+                //获取文件的字节流
+                byte[] bytes = EntityUtils.toByteArray(entity);
+                String realPath = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\identifyTeaBud\\girl.jpg";
+                fos = new FileOutputStream(realPath);
+                fos.write(bytes);
                 //确保流关闭
                 EntityUtils.consume(entity);
-            }else {
-                System.out.println("请求异常");
+                return realPath;
+            }else if(status != 200) {
+                failListener.fail();
+                return null;
             }
         } catch (IOException e) {
             e.printStackTrace();
+            failListener.fail();
         }finally {
             if(client!=null){
                 try {
@@ -73,11 +85,23 @@ public class UploadUtil {
                     e.printStackTrace();
                 }
             }
+            if(fos!=null){
+                try {
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-
+        return null;
     }
 
     public static void main(String[] args) {
-        uploadImage("http://localhost:8080/model/originTeaBud");
+        uploadImage("http://localhost:8080/model/originTeaBud", new FailListener() {
+            @Override
+            public void fail() {
+                System.out.println("请求失败");
+            }
+        });
     }
 }

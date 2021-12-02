@@ -30,7 +30,7 @@ public class RegisterInterface {
 
 
     public void init() throws IOException {
-        BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/loginBg.png")));
+        BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/loginBg.png")));
 
         //font字体
         Font font = new Font("楷体",Font.BOLD,16);
@@ -119,7 +119,7 @@ public class RegisterInterface {
 
         backGroupPanel.add(registerBox);
         jf.add(backGroupPanel);
-        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/tea.png")));
+        jf.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/tea.png")));
         jf.setBounds((ScreenUtils.getScreenWidth()-WIDTH)/2,(ScreenUtils.getScreenHeight()-HEIGHT)/2,WIDTH,HEIGHT);
         jf.setResizable(false);
         jf.setVisible(true);

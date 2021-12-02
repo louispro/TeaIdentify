@@ -2,6 +2,7 @@ package com.louis.teaSystemService.controller;
 
 import com.louis.teaSystemService.pojo.ResultInfo;
 import com.louis.teaSystemService.service.IdentifyModelService;
+import com.louis.teaSystemService.util.DownloadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -41,42 +42,20 @@ public class IdentifyModelController {
 
     //获取嫩芽图像
     @PostMapping ("originTeaBud")
-    public String getOriginTeaBud(@RequestParam("fileName") MultipartFile file, Model model, HttpServletRequest request){
+    public ResponseEntity<byte[]> getOriginTeaBud(@RequestParam("fileName") MultipartFile file, Model model, HttpServletRequest request) throws IOException {
         System.out.println("上传的文件信息");
+        String filename = file.getOriginalFilename();
         System.out.println("文件名："+file.getName());
         System.out.println("文件名字："+file.getOriginalFilename());
         //保存文件
         try {
-            file.transferTo(new File("D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\identify\\identifyTeaBud\\"+file.getOriginalFilename()));
+            file.transferTo(new File("D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\service\\originTeaBud\\"+file.getOriginalFilename()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Enumeration<String> headNames = request.getHeaderNames();
-        while (headNames.hasMoreElements()){
-            String headName = headNames.nextElement();
-            System.out.println(headName+"===>"+request.getHeader(headName));
-        }
-        model.addAttribute("imageName",file.getOriginalFilename());
-
-
-        return "success";
+        //返回识别之后的图片
+        return DownloadUtil.downloadImage(request,filename);
     }
 
-    //嫩芽识别
-    @RequestMapping("/identify")
-    public ResponseEntity<byte[]> identifyTeaBud(HttpServletRequest request) throws IOException {
-        ServletContext context = request.getServletContext();
-        //1.获取要下载文件的真实路径
-        String realPath = context.getRealPath("/static/images/teaIdentify/identify/identifyTeaBud/girl.jpg");
-        System.out.println("文件完整路径:"+realPath);
-        //2.获取下载文件的流
-        FileInputStream fileInputStream = new FileInputStream(realPath);
-        byte[] tmp = new byte[fileInputStream.available()];
-        fileInputStream.read(tmp);
-        fileInputStream.close();    //关闭流
-        //3.返回流
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Disposition","attachment;filename="+"jquery-1.9.1.min.js");
-        return new ResponseEntity<>(tmp,headers, HttpStatus.OK);
-    }
+
 }

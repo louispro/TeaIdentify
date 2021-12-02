@@ -20,11 +20,11 @@ public class SystemTreeRender extends DefaultTreeCellRenderer {
     private ImageIcon identifyIcon;
 
     public SystemTreeRender(){
-            rootIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/system.png");
-            labelIcon = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/label.png");
-            processIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/process.png");
-            trainIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/train.png");
-            identifyIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/tea/identify.png");
+            rootIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/system.png");
+            labelIcon = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/label.png");
+            processIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/process.png");
+            trainIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/train.png");
+            identifyIcon  = new ImageIcon("src/main/resources/static/images/teaIdentify/client/tea/identify.png");
     }
 
     @Override

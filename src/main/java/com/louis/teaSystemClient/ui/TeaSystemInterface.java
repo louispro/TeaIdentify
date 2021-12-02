@@ -71,7 +71,7 @@ public class TeaSystemInterface {
         splitPane.setRightComponent(teaBudIdentifyPanel);
 
         try {
-            jFrame.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/tea/tea.png")));
+            jFrame.setIconImage(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/tea.png")));
         } catch (IOException e) {
             e.printStackTrace();
         }
