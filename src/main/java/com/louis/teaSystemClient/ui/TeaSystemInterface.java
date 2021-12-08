@@ -128,19 +128,7 @@ public class TeaSystemInterface {
             }
         });
 
-        //点击任务栏事件
-//        jFrame.addWindowStateListener(new WindowStateListener() {
-//            @Override
-//            public void windowStateChanged(WindowEvent e) {
-//                if(e.getNewState() == 1 || e.getNewState() == 7) {  //窗口最小化
-//                    System.out.println("窗口最小化");
-//                }else if(e.getNewState() == 0) {    //窗口恢复到初始状态
-//                    System.out.println("窗口恢复到初始状态");
-//                }else if(e.getNewState() == 6) {
-//                    System.out.println("窗口最大化");
-//                }
-//            }
-//        });
+
     }
 
     //加载嫩芽识别界面

@@ -21,7 +21,8 @@ public class DownloadUtil {
 //        String filename = "girl.jpg";
         //1.获取要下载文件的真实路径
 //        String realPath = context.getRealPath("static/images/teaIdentify/identify/identifyTeaBud/girl.jpg");
-        String realPath = context.getRealPath("/WEB-INF/classes/static/images/teaIdentify/service/originTeaBud/"+filename);
+//        String realPath = context.getRealPath("/WEB-INF/classes/static/images/teaIdentify/service/originTeaBud/"+filename);
+        String realPath = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\service\\originTeaBud"+filename;
         System.out.println("文件完整路径:"+realPath);
         //2.获取下载文件的流
         FileInputStream fileInputStream = new FileInputStream(realPath);

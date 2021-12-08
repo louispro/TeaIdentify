@@ -19,7 +19,6 @@ public class JsonUtils {
         ResultInfo resultInfo = null;
         try {
             resultInfo = om.readValue(json, ResultInfo.class);
-            System.out.println(json);
         } catch (IOException e) {
             e.printStackTrace();
         }

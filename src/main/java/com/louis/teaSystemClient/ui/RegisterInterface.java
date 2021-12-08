@@ -8,6 +8,9 @@ import com.louis.teaSystemClient.util.ScreenUtils;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +30,11 @@ public class RegisterInterface {
     final int WIDTH = 500;
     final int HEIGHT = 500;
 
-
+    private boolean hasUsername = false;
+    private boolean hasPassword = false;
+    private boolean hasRePassword = false;
+    private boolean hasPhone = false;
+    private boolean hasSex = false;
 
     public void init() throws IOException {
         BackgroundPanel backGroupPanel = new BackgroundPanel(ImageIO.read(new File("src/main/resources/static/images/teaIdentify/client/tea/loginBg.png")));
@@ -51,7 +58,7 @@ public class RegisterInterface {
         Box pwBox = Box.createHorizontalBox();
         JLabel pwLabel = new JLabel("密    码");
         pwLabel.setFont(font);
-        JTextField pwField = new JTextField(15);
+        JPasswordField pwField = new JPasswordField(15);
         pwBox.add(pwLabel);
         pwBox.add(Box.createHorizontalStrut(10));
         pwBox.add(pwField);
@@ -60,7 +67,7 @@ public class RegisterInterface {
         Box rePwBox = Box.createHorizontalBox();
         JLabel rePwLabel = new JLabel("确认密码");
         rePwLabel.setFont(font);
-        JTextField rePwField = new JTextField(15);
+        JPasswordField rePwField = new JPasswordField(15);
         rePwBox.add(rePwLabel);
         rePwBox.add(Box.createHorizontalStrut(10));
         rePwBox.add(rePwField);
@@ -97,6 +104,7 @@ public class RegisterInterface {
         Box btnBox = Box.createHorizontalBox();
         JButton registerBtn= new JButton("注册");
         JButton loginBtn  = new JButton("登录");
+        registerBtn.setEnabled(false);
         loginBtn.setFont(font);
         registerBtn.setFont(font);
         btnBox.add(registerBtn);
@@ -174,6 +182,113 @@ public class RegisterInterface {
                 }
             }
         });
+
+        //监听文本框改变事件
+        Document userDoc = userField.getDocument();
+        Document passwordDoc = pwField.getDocument();
+        Document rePasswordDoc = rePwField.getDocument();
+        Document phoneDoc = phoneField.getDocument();
+        userDoc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasUsername = true;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone  ){
+                    registerBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0) hasUsername = false;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone   ){
+                    registerBtn.setEnabled(true);
+                }else{
+                    registerBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+        passwordDoc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasPassword = true;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone  ){
+                    registerBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0) hasPassword = false;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone  ){
+                    registerBtn.setEnabled(true);
+                }else{
+                    registerBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+        rePasswordDoc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasRePassword = true;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone  ){
+                    registerBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0) hasRePassword = false;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone  ){
+                    registerBtn.setEnabled(true);
+                }else{
+                    registerBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+        phoneDoc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasPhone = true;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone){
+                    registerBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0) hasPhone = false;
+                if(hasUsername && hasPassword && hasRePassword && hasPhone){
+                    registerBtn.setEnabled(true);
+                }else{
+                    registerBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+
     }
 
     public static void main(String[] args) {

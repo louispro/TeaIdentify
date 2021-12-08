@@ -9,6 +9,9 @@ import com.louis.teaSystemClient.pojo.ResultInfo;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,6 +29,8 @@ public class LoginInterface {
     JFrame jf = new JFrame("茶叶嫩芽识别系统");
     final int WIDTH = 500;
     final int HEIGHT = 300;
+    private boolean hasUsername = false;
+    private boolean hasPassword = false;
 
     //初始化登陆界面
     public void init() throws IOException {
@@ -51,7 +56,7 @@ public class LoginInterface {
         Box pwBox = Box.createHorizontalBox();
         JLabel pwLabel = new JLabel("密码：");
         pwLabel.setFont(font);
-        JTextField pwField = new JTextField(15);
+        JPasswordField pwField = new JPasswordField(15);
         pwBox.add(pwLabel);
         pwBox.add(Box.createHorizontalStrut(10));
         pwBox.add(pwField);
@@ -59,6 +64,7 @@ public class LoginInterface {
         //按钮box
         Box btnBox = Box.createHorizontalBox();
         JButton loginBtn = new JButton("登录");
+        loginBtn.setEnabled(false); //默认禁用登录按钮，输入之后才能登录
         JButton registerBtn = new JButton("注册");
         loginBtn.setFont(font);
         registerBtn.setFont(font);
@@ -124,7 +130,64 @@ public class LoginInterface {
                 }
             }
         });
+
+        //监听文本框内容改变事件
+        Document userDt = userField.getDocument();
+        userDt.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasUsername = true;
+                if(hasUsername && hasPassword){
+                    loginBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0)    hasUsername = false;    //清空文本框时改变标识
+                if(hasUsername && hasPassword){
+                    loginBtn.setEnabled(true);
+                }else{
+                    loginBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+
+        Document passwordDt = pwField.getDocument();
+        passwordDt.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                hasPassword = true;
+                if(hasUsername && hasPassword){
+                    loginBtn.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                Document d = e.getDocument();
+                if(d.getLength()==0)    hasPassword = false;    //清空文本框时改变标识
+                if(hasUsername && hasPassword){
+                    loginBtn.setEnabled(true);
+                }else {
+                    loginBtn.setEnabled(false);
+                }
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+
+            }
+        });
+
     }
+
 
     //主窗口
     public static void main(String[] args) {

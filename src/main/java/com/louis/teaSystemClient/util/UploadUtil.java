@@ -27,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 public class UploadUtil {
 
     //上传图片
-    public static String uploadImage(String url, FailListener failListener){
+    public static String uploadImage(String url,String filePath, FailListener failListener){
         //可关闭的httpclient客户端，相当于打开的一个浏览器
         CloseableHttpClient client = HttpClients.createDefault();
         //构造httpPost请求对象
@@ -40,7 +40,7 @@ public class UploadUtil {
         builder.setCharset(Consts.UTF_8);       //设置编码
         builder.setContentType(ContentType.MULTIPART_FORM_DATA);    //设置为表单form enctype为application/m
         builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);  //设置浏览器模式
-        HttpEntity httpEntity = builder.addBinaryBody("fileName",new File("src/main/resources/static/images/teaIdentify/client/originTeaBud/girl.jpg"))
+        HttpEntity httpEntity = builder.addBinaryBody("fileName",new File(filePath))
                 .build();
         httpPost.setEntity(httpEntity);
         //响应
@@ -57,7 +57,8 @@ public class UploadUtil {
 //                String result = EntityUtils.toString(entity, StandardCharsets.UTF_8);   //获取响应体的字符串形式
                 //获取文件的字节流
                 byte[] bytes = EntityUtils.toByteArray(entity);
-                String realPath = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\identifyTeaBud\\girl.jpg";
+                String filename = filePath.split("\\\\")[filePath.split("\\\\").length-1];
+                String realPath = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\identifyTeaBud\\"+filename;
                 fos = new FileOutputStream(realPath);
                 fos.write(bytes);
                 //确保流关闭
@@ -97,7 +98,7 @@ public class UploadUtil {
     }
 
     public static void main(String[] args) {
-        uploadImage("http://localhost:8080/model/originTeaBud", new FailListener() {
+        uploadImage("http://localhost:8080/model/originTeaBud","", new FailListener() {
             @Override
             public void fail() {
                 System.out.println("请求失败");
