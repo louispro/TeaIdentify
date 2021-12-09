@@ -4,7 +4,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 
 /**
- * ÀµĞ¡ D
+ * èµ–å°ç‡š
  * www.louis.com
  */
 public class CookiesHolder {

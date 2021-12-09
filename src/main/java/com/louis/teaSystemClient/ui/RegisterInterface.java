@@ -288,7 +288,6 @@ public class RegisterInterface {
 
             }
         });
-
     }
 
     public static void main(String[] args) {

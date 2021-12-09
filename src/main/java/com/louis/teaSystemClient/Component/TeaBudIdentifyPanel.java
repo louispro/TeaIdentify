@@ -5,10 +5,7 @@ import com.louis.teaSystemClient.listener.FailListener;
 import com.louis.teaSystemClient.listener.SuccessListener;
 import com.louis.teaSystemClient.pojo.ResultInfo;
 import com.louis.teaSystemClient.render.FileIconView;
-import com.louis.teaSystemClient.util.GetUtils;
-import com.louis.teaSystemClient.util.JsonUtils;
-import com.louis.teaSystemClient.util.ResultInfoData2Vector;
-import com.louis.teaSystemClient.util.UploadUtil;
+import com.louis.teaSystemClient.util.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +26,7 @@ public class TeaBudIdentifyPanel extends JPanel{
     JComboBox<String> modelCombox = new JComboBox<>();
     //顶部的两个panel
     JPanel modelPanel = new JPanel();
-    JPanel btnPanel = new JPanel(); //此panel用于放置按钮
+    JPanel btnPanel = new JPanel();     //此panel用于放置按钮
 
     //识别按钮
     JButton identifyBtn = new JButton();
@@ -52,7 +49,7 @@ public class TeaBudIdentifyPanel extends JPanel{
     JLabel identifyImageLabel = new JLabel();
 
     //当前待识别图片的路径
-    private String currentTeaImagePath = "D:\\Codes\\JavaCode\\TeaSystem\\src\\main\\resources\\static\\images\\teaIdentify\\client\\originTeaBud\\girl.jpg";
+    private String currentTeaImagePath = PropertiesUtil.getValue("currentTeaImagePath");
 
 
     public TeaBudIdentifyPanel() {
@@ -160,6 +157,7 @@ public class TeaBudIdentifyPanel extends JPanel{
                 if(evt.getPropertyName() == JFileChooser.SELECTED_FILE_CHANGED_PROPERTY){
                     //获取用户选择的新文件
                     File f = (File) evt.getNewValue();
+                    PropertiesUtil.setValue("currentTeaImagePath",f.getAbsolutePath());
                     if(f == null){
                         //没选择文件什么都不做
                         return;
@@ -174,6 +172,7 @@ public class TeaBudIdentifyPanel extends JPanel{
                 }
             }
         });
+
 
     }
 
@@ -191,12 +190,18 @@ public class TeaBudIdentifyPanel extends JPanel{
             @Override
             public void fail() {
 //                JOptionPane.showMessageDialog(parent,"网络异常，请检查网络");
+                //网络异常无法获取model信息
+                String models = PropertiesUtil.getValue("model");
+                for(String model:models.split(",")){
+                    modelCombox.addItem(model);
+                }
             }
         });
     }
 
     //添加茶叶图片
     public void setImage(JLabel jLabel,String realPath){
+        //
         jLabel.setBorder(BorderFactory.createLineBorder(Color.green,2));
         ImageIcon image = new ImageIcon(realPath);
         //缩小图片
@@ -220,6 +225,8 @@ public class TeaBudIdentifyPanel extends JPanel{
         fileChooser.setAcceptAllFileFilterUsed(false);
         //为文件选择器指定自定义的FileView对象
         fileChooser.setFileView(new FileIconView(imageFileFilter));
+        //设置文件选择框标题
+        fileChooser.setDialogTitle("选择图片");
         //为文件选择器指定一个预览图片的附件
         fileChooser.setAccessory(accessory);
         accessory.setPreferredSize(new Dimension(200,200));

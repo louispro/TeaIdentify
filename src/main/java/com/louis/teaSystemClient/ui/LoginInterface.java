@@ -3,9 +3,11 @@ package com.louis.teaSystemClient.ui;
 
 import com.louis.teaSystemClient.Component.BackgroundPanel;
 import com.louis.teaSystemClient.util.JsonUtils;
+import com.louis.teaSystemClient.util.NetUtil;
 import com.louis.teaSystemClient.util.PostUtils;
 import com.louis.teaSystemClient.util.ScreenUtils;
 import com.louis.teaSystemClient.pojo.ResultInfo;
+import com.louis.teaSystemService.pojo.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -100,12 +102,16 @@ public class LoginInterface {
                 //发送请求
                 PostUtils.postWithParams("http://localhost:8080/user/login",params,result -> {
                     ResultInfo info = JsonUtils.parseResult(result);
-                    System.out.println("info:"+info);
                     //请求成功
                     if(info.isFlag()){
                         try{
                             //登陆成功，跳转至系统
-                            new TeaSystemInterface().init();
+                            TeaSystemInterface teaSystemInterface = new TeaSystemInterface();
+                            User user = new User();
+                            user.setUsername(username);
+                            user.setPassword(password);
+                            teaSystemInterface.setUser(user);   //初始化主页面的用户信息
+                            teaSystemInterface.init();  //初始化主页面
                             jf.dispose();
                         }catch (Exception ex){
                             ex.printStackTrace();
@@ -185,14 +191,29 @@ public class LoginInterface {
 
             }
         });
+    }
 
+    private void checkWebAndService(){
+        if(NetUtil.checkWeb()==false){
+            JOptionPane.showMessageDialog(jf,"网络未连接");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        if(NetUtil.checkService()==false){
+            JOptionPane.showMessageDialog(jf,"远程服务器未开启");
+        }
     }
 
 
     //主窗口
     public static void main(String[] args) {
         try {
-            new LoginInterface().init();
+            LoginInterface loginInterface = new LoginInterface();
+            loginInterface.init();
+            loginInterface.checkWebAndService();
         } catch (IOException e) {
             e.printStackTrace();
         }

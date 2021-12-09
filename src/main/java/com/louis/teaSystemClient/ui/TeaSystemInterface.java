@@ -3,6 +3,7 @@ package com.louis.teaSystemClient.ui;
 import com.louis.teaSystemClient.Component.SystemTree;
 import com.louis.teaSystemClient.Component.TeaBudIdentifyPanel;
 import com.louis.teaSystemClient.util.ScreenUtils;
+import com.louis.teaSystemService.pojo.User;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -34,8 +35,26 @@ public class TeaSystemInterface {
     //嫩芽识别界面
     TeaBudIdentifyPanel teaBudIdentifyPanel = new TeaBudIdentifyPanel();
 
+    //用户信息
+    User user =  null;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public void init(){
+        if(user == null){   //用户未登录，跳转到登录界面
+            try {
+                new LoginInterface().init();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return ;
+        }
         //设置菜单栏
         JMenuBar jMenuBar = new JMenuBar();
         JMenu setting = new JMenu("设置");
@@ -79,8 +98,6 @@ public class TeaSystemInterface {
         jFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        jFrame.setM
         rectangle = jFrame.getBounds();
-        System.out.println(jFrame.getSize());
-        System.out.println(rectangle+"   8");
         jFrame.setVisible(true);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
