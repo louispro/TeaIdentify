@@ -118,7 +118,6 @@ public class TeaBudIdentifyPanel extends JPanel{
         //添加背景图片组件的panel
         imagePanel.add(originImagePanel);
         imagePanel.add(identifyImagePanel);
-
         this.add(imagePanel);
 
         //识别图片
@@ -172,8 +171,6 @@ public class TeaBudIdentifyPanel extends JPanel{
                 }
             }
         });
-
-
     }
 
     public void loadModel(){
