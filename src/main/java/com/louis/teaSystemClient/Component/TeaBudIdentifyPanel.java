@@ -129,6 +129,7 @@ public class TeaBudIdentifyPanel extends JPanel{
                     @Override
                     public void fail() {
                         JOptionPane.showMessageDialog(imagePanel,"请求失败");
+                        return;
                     }
                 });
                 setImage(identifyImageLabel,realpath);
@@ -202,7 +203,7 @@ public class TeaBudIdentifyPanel extends JPanel{
         jLabel.setBorder(BorderFactory.createLineBorder(Color.green,2));
         ImageIcon image = new ImageIcon(realPath);
         //缩小图片
-        Image scaleImage = image.getImage().getScaledInstance((int)(image.getIconWidth()*0.7),(int)(image.getIconHeight()*0.7),Image.SCALE_DEFAULT);
+        Image scaleImage = ImageUtil.scaleImageSize(realPath);
         image.setImage(scaleImage);
         jLabel.setIcon(image);
     }
