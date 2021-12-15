@@ -43,7 +43,7 @@ public class IdentifyModelController {
 
 
     //获取嫩芽图像
-    @PostMapping ("originTeaBud")
+    @PostMapping ("identify")
     public ResponseEntity<byte[]> getOriginTeaBud(@RequestParam("fileName") MultipartFile file, Model model, HttpServletRequest request) throws IOException {
         System.out.println("上传的文件信息");
         //上传文件的原始名字

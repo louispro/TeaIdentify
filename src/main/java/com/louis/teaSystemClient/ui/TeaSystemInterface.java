@@ -2,6 +2,8 @@ package com.louis.teaSystemClient.ui;
 
 import com.louis.teaSystemClient.Component.SystemTree;
 import com.louis.teaSystemClient.Component.TeaBudIdentifyPanel;
+import com.louis.teaSystemClient.Component.TeaBudModelPanel;
+import com.louis.teaSystemClient.Component.TeaBudProcessPanel;
 import com.louis.teaSystemClient.util.ScreenUtils;
 import com.louis.teaSystemService.pojo.User;
 
@@ -29,9 +31,9 @@ public class TeaSystemInterface {
     //图像标注界面
     JPanel labelImage = new JPanel();
     //图像处理界面
-    JPanel processImage = new JPanel();
+    TeaBudProcessPanel teaBudProcessPanel = new TeaBudProcessPanel();
     //模型训练界面
-    JPanel trainModel = new JPanel();
+    TeaBudModelPanel teaBudModelPanel = new TeaBudModelPanel();
     //嫩芽识别界面
     TeaBudIdentifyPanel teaBudIdentifyPanel = new TeaBudIdentifyPanel();
 
@@ -131,11 +133,11 @@ public class TeaSystemInterface {
                     splitPane.setDividerLocation(splitPane.getDividerLocation());
                 }
                 if(systemTree.getProcessImage().equals(leaf)){
-                    splitPane.setRightComponent(new JLabel("图像处理"));
+                    splitPane.setRightComponent(teaBudProcessPanel);
                     splitPane.setDividerLocation(splitPane.getDividerLocation());
                 }
                 if(systemTree.getTrainModel().equals(leaf)){
-                    splitPane.setRightComponent(new JLabel("模型训练"));
+                    splitPane.setRightComponent(teaBudModelPanel);
                     splitPane.setDividerLocation(splitPane.getDividerLocation());
                 }
                 if(systemTree.getTeaBudIdentify().equals(leaf)){
@@ -154,6 +156,6 @@ public class TeaSystemInterface {
     }
 
     public static void main(String[] args) {
-        new TeaSystemInterface().init();
+//        new TeaSystemInterface().init();
     }
 }

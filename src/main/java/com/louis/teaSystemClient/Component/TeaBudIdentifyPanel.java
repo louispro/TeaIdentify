@@ -125,7 +125,7 @@ public class TeaBudIdentifyPanel extends JPanel{
             @Override
             public void mouseClicked(MouseEvent e) {
                 //将当前图片currentTeaImagePath上传给服务器识别
-                String realpath =  UploadUtil.uploadImage("http://localhost:8080/model/originTeaBud",currentTeaImagePath, new FailListener() {
+                String realpath =  UploadUtil.uploadImage("http://localhost:8080/model/identify",currentTeaImagePath, new FailListener() {
                     @Override
                     public void fail() {
                         JOptionPane.showMessageDialog(imagePanel,"请求失败");
